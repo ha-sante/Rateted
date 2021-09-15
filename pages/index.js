@@ -123,7 +123,6 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-
         <div className="container mx-auto mt-5">
           <div className="row mx-auto mt-5">
 
@@ -245,7 +244,6 @@ export default function Home() {
 
           </div>
         </div>
-
       </main>
 
       <footer className={styles.footer}>
