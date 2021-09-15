@@ -33,7 +33,7 @@ export default function Home() {
 
   let Product = {
     image: "https://public-files.gumroad.com/variants/j7cab2rusi2ku7ktfmhjpsay5bek/e62e4bcd3d858e4839b5c2b465bae257f22dc2666e91f438860b8031380a9984",
-    title: "The Product UX Design Toolkit",
+    title: "The UI Design Principles Book",
     author: {
       image: "https://public-files.gumroad.com/variants/cf2fjffg2xhxajwt8w2fag2kgzj4/4ec519eb32080d4ff1ef08cba157dc2ac7dab092fa26aeca54e8e2b8f31f9a63",
       name: "Michael Filipiuk"
