@@ -2,12 +2,17 @@
 @tailwind components;
 @tailwind utilities; */
 
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 .box-shadow-muted{
@@ -22,6 +27,17 @@ a {
   box-sizing: border-box;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 100px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #afafaf; 
+}
+
 input{
   border: none;
   font-size: 13px;
@@ -31,4 +47,8 @@ input{
 
 .add-review-box{
   background: #5C85FF;
+}
+
+.radius50{
+  border-radius: 50% !important;
 }

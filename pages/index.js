@@ -21,11 +21,13 @@ let config = {
 export default function Home() {
 
   const [getRatedReviews, setRatedReviews] = useState([]);
+  const [getProductRating, setProductRating] = useState(0);
 
   const [getRatedReview, setRatedReview] = useState({ rate: 0, review: '' });
   const [getShowSubmitRatedReview, setShowSubmitRatedReview] = useState(false);
 
   let Product = {
+    image: "https://public-files.gumroad.com/variants/j7cab2rusi2ku7ktfmhjpsay5bek/e62e4bcd3d858e4839b5c2b465bae257f22dc2666e91f438860b8031380a9984",
     title: "The Product UX Design Toolkit",
     author: {
       image: "https://public-files.gumroad.com/variants/cf2fjffg2xhxajwt8w2fag2kgzj4/4ec519eb32080d4ff1ef08cba157dc2ac7dab092fa26aeca54e8e2b8f31f9a63",
@@ -44,6 +46,24 @@ export default function Home() {
 
     setShowSubmitRatedReview(false);
   }
+
+
+  useEffect(() => {
+
+    if (getRatedReviews) {
+
+      let rating_average = 0
+      getRatedReviews.map((block, index) => rating_average += block.rate);
+
+      let rated = rating_average > 0 ? Math.round(rating_average / getRatedReviews.length): 0;
+
+      console.log("rating_average", rating_average);
+      console.log("rated", rated);
+
+      setProductRating(rated)
+    }
+
+  }, [getRatedReviews]);
 
   return (
     <div className={styles.container}>
@@ -66,9 +86,9 @@ export default function Home() {
 
             <div className="col-lg-4 col-md-12 col-sm-12">
 
-              <img src="https://public-files.gumroad.com/variants/j7cab2rusi2ku7ktfmhjpsay5bek/e62e4bcd3d858e4839b5c2b465bae257f22dc2666e91f438860b8031380a9984"
-                height="auto" width="100%"
-                className="rounded" />
+              <img src={Product.image} height="auto" width="100%" className="rounded mb-3" />
+
+              <p> By  <img src={Product.author.image} height="30px" width="30px" className="rounded radius50" />  {Product.author.name}</p>
 
             </div>
 
@@ -76,7 +96,7 @@ export default function Home() {
 
               <div className="w-100 text-left border-bottom mx-auto">
 
-                <h3 className="">
+                <h3 className="fw-bold">
                   {Product.title}
                 </h3>
 
@@ -84,14 +104,15 @@ export default function Home() {
 
                   <div className="d-flex justify-content-between align-items-center">
 
-                    <h4 className="mt-2 mr-5">
-                      {getRatedReviews.length}
+                    <h4 className="mt-2 mr-5 fw-bold">
+                      {getProductRating}
                     </h4>
 
-                    <ReactStars
+                   <ReactStars
                       count={5}
                       edit={false}
-                      value={getRatedReviews.length}
+                      key={getProductRating}
+                      value={getProductRating}
                       size={25}
                       activeColor="#ffd700"
                       className="ml-5"
@@ -109,13 +130,13 @@ export default function Home() {
 
 
               {getShowSubmitRatedReview &&
-                <div className="mx-auto w-100 mt-3 p-3 rounded add-review-box" >
+                <div className="mx-auto w-100 mt-3 pb-3 add-review- border-bottom" >
 
-                  <h5 className="text-white"> What is your Rating? </h5>
+                  <h5 className="text-whit"> What is your Rating? </h5>
 
-                  <div className="d-flex justify-content-between mt-3 mb-3 mx-auto">
+                  <div className="d-flex justify-content-between align-items-start mt-3 mb-3 mx-auto">
 
-                    <div className="col-lg-4 col-md-12 col-sm-12 p-2">
+                    <div className="col-lg-4 col-md-12 col-sm-12 p-1">
 
                       <h6> Rate </h6>
 
@@ -132,7 +153,7 @@ export default function Home() {
 
                       <h6> Review </h6>
 
-                      <textarea type="text" placeholder="Review" className="p-2 w-100"
+                      <textarea type="text" placeholder="Start typing..." className="p-2 w-100"
                         onChange={(e) => {
                           setRatedReview({
                             ...getRatedReview,
@@ -161,11 +182,15 @@ export default function Home() {
 
                 {getRatedReviews.map((block, index) => {
                   return (
-                    <div className="d-flex justify-content-between align-items-center" key={index}>
+                    <div className="row align-items-start" key={index}>
 
-                      <ReactStars count={5} value={block.rate} edit={false} size={20} activeColor="#ffd700" />
+                      <div className="col-lg-3 col-md-12 col-sm-12 text-left">
+                        <ReactStars count={5} value={block.rate} edit={false} size={20} activeColor="#ffd700" />
+                      </div>
 
-                      <p className="ml-5 mt-2"> <bold> {block.rate} </bold> {block.review} </p>
+                      <div className="col-lg-9 col-md-12 col-sm-12 text-right">
+                        <p className=""> <span className="ml-2 mr-3 fw-bold"> {block.rate} </span>  {block.review} </p>
+                      </div>
 
                     </div>
                   )
