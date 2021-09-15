@@ -125,7 +125,7 @@ export default function Home() {
       <main className={styles.main}>
 
         <div className="container mx-auto mt-5">
-          <div className="row mx-auto mt-5 w-40">
+          <div className="row mx-auto mt-5">
 
             <div className="col-lg-4 col-md-12 col-sm-12">
 
