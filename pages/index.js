@@ -18,6 +18,11 @@ let config = {
   Product: Company
 }
 
+import { createClient } from '@supabase/supabase-js'
+
+// Create a single supabase client for interacting with your database 
+const supabase = createClient("https://jicfsomuxptppxnyouus.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzMTcyNjIzNCwiZXhwIjoxOTQ3MzAyMjM0fQ.GM0dllL65Ibiqoulu0bv-_qFBfwnJHPbcCpnaHUEO3w")
+
 export default function Home() {
 
   const [getRatedReviews, setRatedReviews] = useState([]);
@@ -41,12 +46,48 @@ export default function Home() {
     setRatedReview({ ...getRatedReview, rate })
   };
 
-  function AddRating() {
-    setRatedReviews([...getRatedReviews, getRatedReview]);
 
+  function AddRating() {
+
+    console.log("getRatedReview", getRatedReview);
+
+    supabase.from('ratedreviews').insert([getRatedReview]).then(response => {
+      console.log("data", response.data);
+    }).catch(error => {
+      console.log("error", error);
+    })
+
+    setRatedReviews([...getRatedReviews, getRatedReview]);
     setShowSubmitRatedReview(false);
   }
 
+  useEffect(() => {
+
+    supabase.from('ratedreviews').on('*', payload => {
+      
+      supabase.from('ratedreviews').select().then(response => {
+        console.log("get all datas", response.data);
+  
+        setRatedReviews([...response.data]);
+      }).catch(error => {
+        console.log("error", error);
+      })
+
+    }).subscribe()
+
+  }, []);
+
+  useEffect(() => {
+
+    supabase.from('ratedreviews').select().then(response => {
+      console.log("get all datas", response.data);
+
+      setRatedReviews([...response.data]);
+    }).catch(error => {
+      console.log("error", error);
+    })
+
+  }, []);
 
   useEffect(() => {
 
@@ -55,12 +96,14 @@ export default function Home() {
       let rating_average = 0
       getRatedReviews.map((block, index) => rating_average += block.rate);
 
-      let rated = rating_average > 0 ? Math.round(rating_average / getRatedReviews.length): 0;
+      let rated = rating_average > 0 ? Math.round(rating_average / getRatedReviews.length) : 0;
 
       console.log("rating_average", rating_average);
       console.log("rated", rated);
 
       setProductRating(rated)
+
+      console.clear();
     }
 
   }, [getRatedReviews]);
@@ -108,7 +151,7 @@ export default function Home() {
                       {getProductRating}
                     </h4>
 
-                   <ReactStars
+                    <ReactStars
                       count={5}
                       edit={false}
                       key={getProductRating}
