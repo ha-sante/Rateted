@@ -176,7 +176,7 @@ export default function Home() {
 
                   <h5 className="text-whit"> What is your Rating? </h5>
 
-                  <div className="d-flex justify-content-between align-items-start mt-3 mb-3 mx-auto">
+                  <div className="row justify-content-between align-items-start mt-3 mb-3 mx-auto">
 
                     <div className="col-lg-4 col-md-12 col-sm-12 p-1">
 
